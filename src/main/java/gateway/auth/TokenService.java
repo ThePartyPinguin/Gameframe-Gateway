@@ -1,8 +1,8 @@
 package gateway.auth;
 
 
-import gateway.dao.IAuthService;
-import gateway.model.entity.TokenCheckResponse;
+import gateway.dao.IAuthDao;
+import gateway.model.TokenCheckResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.RequestScope;
@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 public class TokenService {
 
     @Autowired
-    private IAuthService authService;
+    private IAuthDao authService;
 
-    private TokenCheckResponse checkToken(HttpServletRequest request){
+    public TokenCheckResponse checkToken(HttpServletRequest request){
 
 
         String bearerToken = request.getHeader("authorization");
@@ -31,7 +31,12 @@ public class TokenService {
 
         String token = bearerToken.substring(7);
 
-        return this.authService.validateToken(token);
+        boolean valid = this.authService.validateToken(token);
+
+        if(!valid)
+            return new TokenCheckResponse(false, "Token not valid please login again to get a new token", 401);
+
+        return new TokenCheckResponse(true, "Valid token", 200);
     }
 
 }

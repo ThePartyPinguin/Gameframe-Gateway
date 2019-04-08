@@ -1,4 +1,4 @@
-package gateway.model.entity;
+package gateway.model;
 
 public class TokenCheckResponse {
 

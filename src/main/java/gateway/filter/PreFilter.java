@@ -4,6 +4,7 @@ package gateway.filter;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import gateway.auth.TokenService;
+import gateway.model.TokenCheckResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,19 @@ public class PreFilter extends ZuulFilter {
 
         log.info(request.getHeader("Authorization"));
 
-        return request.getHeader("Authorization") != null;
+
+        boolean hasAutHeader = request.getHeader("Authorization") != null;
+
+        if(hasAutHeader)
+            return true;
+
+
+        String uri = ctx.getRequest().getRequestURI();
+
+        if(uri.contains("/auth/public"))
+            return false;
+
+        return true;
     }
 
     @Override
@@ -52,24 +65,24 @@ public class PreFilter extends ZuulFilter {
         HttpServletRequest request = ctx.getRequest();
 
 
+        TokenCheckResponse response = this.tokenService.checkToken(request);
 
 
-//        log.info("inside pre filter: " + request.getPathInfo());
 
 
-//        System.out.println("Inside pre filter");
-
-
+        if(!response.isValidToken())
+            setFailedRequest(ctx, "Invalid user token", 401);
 
         return null;
     }
 
     private void setFailedRequest(RequestContext context, String body, int code) {
-        log.debug("Reporting error ({}): {}", code, body);
+//        log.debug("Reporting error ({}): {}", code, body);
 
         context.setResponseStatusCode(code);
         if (context.getResponseBody() == null) {
             context.setResponseBody(body);
+            context.setResponseStatusCode(code);
             context.setSendZuulResponse(false);
         }
     }
