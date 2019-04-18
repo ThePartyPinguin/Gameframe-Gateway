@@ -5,6 +5,7 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import gateway.auth.TokenService;
 import gateway.model.TokenCheckResponse;
+import gateway.model.dto.token.TokenValidateResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class PreFilter extends ZuulFilter {
 
         HttpServletRequest request = ctx.getRequest();
 
-        log.info(request.getHeader("Authorization"));
+//        log.info(request.getHeader("Authorization"));
 
 
         boolean hasAutHeader = request.getHeader("Authorization") != null;
@@ -65,14 +66,18 @@ public class PreFilter extends ZuulFilter {
         HttpServletRequest request = ctx.getRequest();
 
 
-        TokenCheckResponse response = this.tokenService.checkToken(request);
+        TokenValidateResponse response = this.tokenService.checkToken(request);
 
 
 
 
-        if(!response.isValidToken())
+        if(!response.isValid()){
             setFailedRequest(ctx, "Invalid user token", 401);
-
+            return null;
+        }
+        else{
+            ctx.addZuulRequestHeader("X-user-id", response.getUserId() + "");
+        }
         return null;
     }
 
