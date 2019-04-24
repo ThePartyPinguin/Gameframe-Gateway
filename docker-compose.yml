@@ -8,9 +8,9 @@ services:
       - "8000:8000"
     expose:
       - "8000/tcp"
-    networks:
-      - default
-      - gameframe-internal-network
+#    networks:
+#      - default
+#      - gameframe-internal-network
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     restart: always
