@@ -4,11 +4,15 @@ services:
   gameframe-gateway:
     build: .
     container-name: gameframe-gateway
-    expose: -8000
+    expose:
+     - "8000:8000"
     networks:
-      -default
-      -esd6-network
-    retart: always
+      default:
+      esd6-network:
+        ipv4_address: 172.18.0.100
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: always
 
 networks:
   esd6-network:
