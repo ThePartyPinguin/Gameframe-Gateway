@@ -15,6 +15,6 @@ services:
     restart: always
 
 networks:
-  esd6-network:
+  gameframe-internal-network:
     external: true
 
