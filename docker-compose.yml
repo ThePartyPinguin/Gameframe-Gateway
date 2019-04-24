@@ -8,7 +8,7 @@ services:
      - "8000/tcp"
     networks:
       default:
-      esd6-network:
+      gameframe-internal-network:
         ipv4_address: 172.18.0.100
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
