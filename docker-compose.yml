@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  gameframe-gateway:
+    build: .
+    container-name: gameframe-gateway
+    expose: -8000
+    networks:
+      -default
+      -esd6-network
+    retart: always
+
+networks:
+  esd6-network:
+    external: true
+
