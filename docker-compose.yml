@@ -3,9 +3,9 @@ version: '3'
 services:
   gameframe-gateway:
     build: .
-    container-name: gameframe-gateway
+    container_name: gameframe-gateway
     expose:
-     - "8000:8000"
+     - "8000/tcp"
     networks:
       default:
       esd6-network:
