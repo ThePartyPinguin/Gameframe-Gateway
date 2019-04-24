@@ -3,14 +3,17 @@ version: '3'
 services:
   gameframe-gateway:
     build: .
-    container-name: gameframe-gateway
-    expose: -8000
+    container_name: gameframe-gateway
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000/tcp"
     networks:
-      -default
-      -esd6-network
-    retart: always
+      - gameframe-internal-network
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
 
 networks:
-  esd6-network:
+  gameframe-internal-network:
     external: true
-
