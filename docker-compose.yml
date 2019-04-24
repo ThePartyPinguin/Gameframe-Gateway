@@ -4,17 +4,14 @@ services:
   gameframe-gateway:
     build: .
     container_name: gameframe-gateway
+    ports:
+      - "8000:8000"
     expose:
-     - "8000/tcp"
+      - "8000/tcp"
     networks:
-      default:
-      gameframe-internal-network:
-        ipv4_address: 172.18.0.100
+      - default
+      - gameframe-internal-network
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     restart: always
-
-networks:
-  gameframe-internal-network:
-    external: true
 
