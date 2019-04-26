@@ -18,12 +18,11 @@ public class PostFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        return true;
+        return false;
     }
 
     @Override
     public Object run() {
-        System.out.println("Inside Post filter");
         return null;
     }
 }
