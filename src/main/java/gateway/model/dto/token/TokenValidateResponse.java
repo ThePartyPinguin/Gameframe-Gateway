@@ -6,6 +6,7 @@ public class TokenValidateResponse{
     private String responseMessage;
     private boolean isValid;
     private long userId;
+    private String token;
 
     public TokenValidateResponse() {
     }
@@ -45,5 +46,13 @@ public class TokenValidateResponse{
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

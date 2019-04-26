@@ -20,7 +20,6 @@ public class TokenService {
 
 
         String bearerToken = request.getHeader("authorization");
-        System.out.println("Auth header Bearer token: " + bearerToken);
 
         if(bearerToken == null)
             return new TokenValidateResponse("No auth header found", 403);

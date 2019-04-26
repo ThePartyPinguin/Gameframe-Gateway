@@ -41,8 +41,6 @@ public class PreFilter extends ZuulFilter {
 
         HttpServletRequest request = ctx.getRequest();
 
-//        log.info(request.getHeader("Authorization"));
-
 
         boolean hasAutHeader = request.getHeader("Authorization") != null;
 
@@ -68,21 +66,19 @@ public class PreFilter extends ZuulFilter {
 
         TokenValidateResponse response = this.tokenService.checkToken(request);
 
-
-
-
         if(!response.isValid()){
-            setFailedRequest(ctx, "Invalid user token", 401);
+            setFailedRequest(ctx, response.getResponseMessage(), 401);
             return null;
         }
         else{
+            ctx.addZuulResponseHeader("access-control-expose-headers", "x-user-token");
+            ctx.addZuulResponseHeader("x-user-token", "Bearer " + response.getToken());
             ctx.addZuulRequestHeader("X-user-id", response.getUserId() + "");
         }
         return null;
     }
 
     private void setFailedRequest(RequestContext context, String body, int code) {
-//        log.debug("Reporting error ({}): {}", code, body);
 
         context.setResponseStatusCode(code);
         if (context.getResponseBody() == null) {
