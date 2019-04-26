@@ -68,3 +68,4 @@ fabric.properties
 /target/**
 target/**
 *.war
+.env
