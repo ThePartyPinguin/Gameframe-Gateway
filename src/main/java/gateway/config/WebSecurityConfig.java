@@ -28,10 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http    .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/auth/public/**").permitAll()
-                .antMatchers("/api/**").permitAll()
-
-                .anyRequest().authenticated();
+                .antMatchers("/auth/public/**").permitAll()
+                .anyRequest().permitAll();
 
 
     }
