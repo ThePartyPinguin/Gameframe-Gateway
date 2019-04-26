@@ -4,6 +4,8 @@ services:
   gameframe-gateway:
     build: .
     container_name: gameframe-gateway
+    ports:
+      - "8000:8000"
     expose:
       - "8000/tcp"
     networks:
