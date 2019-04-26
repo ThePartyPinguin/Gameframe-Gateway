@@ -14,10 +14,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: always
     environment:
-      environment:
-        - INTERNAL_APP_NAME=${INTERNAL_APP_NAME}
-        - SERVICE_INTERNAL_PORT=${SERVICE_INTERNAL_PORT}
-        - EUREKA_URI=${EUREKA_URI}
+      - INTERNAL_APP_NAME=${INTERNAL_APP_NAME}
+      - SERVICE_INTERNAL_PORT=${SERVICE_INTERNAL_PORT}
+      - EUREKA_URI=${EUREKA_URI}
 
 networks:
   gameframe-internal-network:
