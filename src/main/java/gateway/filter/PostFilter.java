@@ -2,6 +2,8 @@ package gateway.filter;
 
 
 import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.context.RequestContext;
+import org.apache.http.HttpStatus;
 
 public class PostFilter extends ZuulFilter {
 
