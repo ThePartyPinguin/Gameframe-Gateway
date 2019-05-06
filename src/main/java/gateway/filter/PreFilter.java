@@ -41,17 +41,15 @@ public class PreFilter extends ZuulFilter {
 
         HttpServletRequest request = ctx.getRequest();
 
+        String uri = ctx.getRequest().getRequestURI();
+
+        if(uri.contains("/public"))
+            return false;
 
         boolean hasAutHeader = request.getHeader("Authorization") != null;
 
         if(hasAutHeader)
             return true;
-
-
-        String uri = ctx.getRequest().getRequestURI();
-
-        if(uri.contains("/auth/public"))
-            return false;
 
         return true;
     }
