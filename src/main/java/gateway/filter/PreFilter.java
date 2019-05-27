@@ -4,10 +4,7 @@ package gateway.filter;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import gateway.auth.TokenService;
-import gateway.model.TokenCheckResponse;
 import gateway.model.dto.token.TokenValidateResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +16,6 @@ public class PreFilter extends ZuulFilter {
 
     @Autowired
     private TokenService tokenService;
-
-
-    private static Logger log = LoggerFactory.getLogger(PreFilter.class);
 
     @Override
     public String filterType() {

@@ -24,7 +24,7 @@ public class TokenService {
         if(bearerToken == null)
             return new TokenValidateResponse("No auth header found", 403);
 
-        if (!(bearerToken.startsWith("Bearer ") || bearerToken.startsWith("Bearer "))) {
+        if (!(bearerToken.startsWith("Bearer ") || bearerToken.startsWith("bearer "))) {
             return new TokenValidateResponse("Auth header not in valid format, should be '[Bearer or bearer] [token]'", 403);
         }
 
