@@ -6,6 +6,7 @@ import com.netflix.zuul.context.RequestContext;
 import gateway.auth.TokenService;
 import gateway.model.dto.token.TokenValidateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_DECORATION_FILTER_ORDER;
 
 public class PreFilter extends ZuulFilter {
+
+    @Value("${zuul.filter.pre.ignore.url}")
+    private String ignoreUrls;
 
     @Autowired
     private TokenService tokenService;
@@ -37,8 +41,15 @@ public class PreFilter extends ZuulFilter {
 
         String uri = ctx.getRequest().getRequestURI();
 
-        if(uri.contains("/public"))
-            return false;
+        String[] urls = this.ignoreUrls.split(",");
+
+        for (String url : urls) {
+            if(uri.contains(url))
+                return false;
+        }
+
+//        if(uri.contains("/public") || uri.contains("/files") || uri.contains("/download"))
+//            return false;
 
         boolean hasAutHeader = request.getHeader("Authorization") != null;
 
