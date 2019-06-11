@@ -37,8 +37,6 @@ public class PreFilter extends ZuulFilter {
 
         RequestContext ctx = RequestContext.getCurrentContext();
 
-        HttpServletRequest request = ctx.getRequest();
-
         String uri = ctx.getRequest().getRequestURI();
 
         String[] urls = this.ignoreUrls.split(",");
@@ -47,14 +45,6 @@ public class PreFilter extends ZuulFilter {
             if(uri.contains(url))
                 return false;
         }
-
-//        if(uri.contains("/public") || uri.contains("/files") || uri.contains("/download"))
-//            return false;
-
-        boolean hasAutHeader = request.getHeader("Authorization") != null;
-
-        if(hasAutHeader)
-            return true;
 
         return true;
     }
